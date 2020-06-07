@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
-    AppComponent
+    UserInfoComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [UserInfoComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(private injector: Injector) {
+    const el = createCustomElement(UserInfoComponent, { injector });
+    customElements.define('user-component', el);
+  }
+
+  ngDoBootstrap() {}
+}
